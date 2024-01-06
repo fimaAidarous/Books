@@ -12,7 +12,7 @@ router.post('/', async (request, response) => {
       !request.body.publisherYear
     ) {
       return response.status(400).send({
-        message: "Send all required fileds:title,author,publisher",
+        message: "Send all required fileds:title,author,publisherYear",
       });
     }
     const newBook = {

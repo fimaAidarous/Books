@@ -3,7 +3,7 @@ import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Book } from "./models/bookmodels.js";
 import booksRoute from './routes/booksRoute.js';
-
+import cors from 'cors';
 const app = express();
 
 // MidleWare for parsing request body
@@ -12,20 +12,19 @@ app.use(express.json());
 
 // MidleWare for hadling CORS POlicy
 // Option 1: Allow All Origins with Default of cors(*)
-app.use(cors());
-
-// Option 2: Allow Custom Origins
+// app.use(cors());
+//Option 2: Allow Custom Origins
 app.use(
     cors({
-        origin: 'http://localhost:5577',
+        origin: 'http://localhost:5173',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['content-type'],
+        allowedHeaders: ['Content-type'],
     })
 );
 
 app.get("/", (request, response) => {
   console.log(request);
-  return request.status(234).send("Welcome to MERN Stack Tutorial");
+  return response.status(200).send("Welcome to MERN Stack Tutorial");
 });
 
 app.use('/books', booksRoute);
@@ -38,5 +37,6 @@ mongoose
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error("MongoDB connection error:", error);
   });
+  
